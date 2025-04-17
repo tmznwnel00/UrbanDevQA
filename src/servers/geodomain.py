@@ -22,66 +22,6 @@ mcp: FastMCP = FastMCP(
 db_path = str(Path(CONFIG.data_path) / CONFIG.db_filename)
 db = SqliteDatabase(db_path=str(db_path))
 
-async def handle_list_tools() -> list[types.Tool]:
-    """List available tools"""
-    return [
-        types.Tool(
-            name="list_tables",
-            description="List all tables in the SQLite database",
-            inputSchema={
-                "type": "object",
-                "properties": {},
-                "required": []
-            }
-        ),
-        types.Tool(
-            name="describe_table",
-            description="Describe the schema and data dictionary of a specific table",
-            inputSchema={
-                "type": "object",
-                "properties": {
-                    "table_name": {
-                        "type": "string",
-                        "description": "Name of the table to describe"
-                    }
-                },
-                "required": ["table_name"]
-            }
-        ),
-        types.Tool(
-            name="read_query",
-            description="Execute a SELECT query on the SQLite database",
-            inputSchema={
-                "type": "object",
-                "properties": {
-                    "query": {
-                        "type": "string",
-                        "description": "The SQL SELECT query to execute"
-                    }
-                },
-                "required": ["query"]
-            }
-        ),
-        types.Tool(
-            name="list_output_area",
-            description="Find LSOA11CD codes using a fuzzy match on a region or local authority name",
-            inputSchema={
-                "type": "object",
-                "properties": {
-                    "name": {
-                        "type": "string",
-                        "description": "Name to match (e.g., region or LAD name)"
-                    },
-                    "output_area_type": {
-                        "type": "string",
-                        "description": "'RGN11NM' or 'LAD11NM'"
-                    }
-                },
-                "required": ["name", "output_area_type"]
-            }
-        )
-    ]
-
 @mcp.tool()
 async def list_tables() -> list[str]:
     """List all tables in the SQLite database
