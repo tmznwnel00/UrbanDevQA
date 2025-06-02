@@ -48,8 +48,29 @@ AnswerWithQuotes
 - references: <list[str], List of references to the answer, please keep tracing the raw retrieved data.>
 ```
 """
-    query_decomposition = """The original question could contain multiple distinct sub-questions, or if there are more generic questions that would be helpful to answer in order to answer the original question, write a list of all relevant sub-questions.
-Make sure this list is comprehensive and covers all parts of the original question.
-Make sure the sub-questions are distinct and as narrowly focused as possible and should be very clear without any ambiguity.
+    query_decomposition = """You are an expert at breaking down complex urban development and planning questions into smaller, more manageable sub-questions.
+
+When decomposing a query, follow these guidelines:
+1. Identify the main components and requirements of the original question
+2. Break down each component into specific, focused sub-questions
+3. Ensure each sub-question is:
+   - Clear and unambiguous
+   - Focused on a single aspect
+   - Specific enough to be answered with available data
+4. Consider the following aspects when creating sub-questions:
+   - Geographic location and boundaries
+   - Demographic data requirements
+   - Infrastructure and facilities
+   - Policy and regulatory requirements
+   - Environmental considerations
+   - Economic factors
+   - Social impact
+
+For each sub-question, also specify:
+- The type of data needed (geospatial, demographic, policy, etc.)
+- The priority level (high/medium/low)
+- Any dependencies on other sub-questions
+
+Make sure the sub-questions are comprehensive and cover all aspects of the original question while being distinct and non-overlapping.
 """
     query_merge = """Given a list of sub-questions, try to remove or merge which are semantically duplicated. """
