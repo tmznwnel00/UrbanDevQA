@@ -30,7 +30,6 @@ import base64
 import json
 from loguru import logger
 
-# 서버 설정 (필요시 config에서 불러오세요)
 SERVER_NAME = "sequential_thinking"
 HOST = "0.0.0.0"
 PORT = 8114
@@ -48,7 +47,7 @@ async def sequential_thinking(query: str) -> dict:
     쿼리를 단계적으로 분해하여 반환합니다.
     (여기에 실제 sequential thinking MCP 로직을 구현하거나, 외부 API 호출/프롬프트 호출 등)
     """
-    # 예시: 간단한 단계 분해 (실제 MCP 로직으로 대체)
+
     steps = [
         {"step": 1, "thought": "문제의 주요 목표 파악"},
         {"step": 2, "thought": "핵심 요소 분해"},
