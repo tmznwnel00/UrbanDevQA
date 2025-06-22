@@ -14,22 +14,33 @@ mcp = FastMCP(
 )
 
 @mcp.tool()
-async def web_search(query: str, max_results: int = 5) -> dict:
+async def web_search(query: str, max_results: int = 3) -> dict:
     """
     Performs a web search using DuckDuckGo and returns the results.
 
     Args:
         query: The search query.
-        max_results: The maximum number of results to return.
+        max_results: The maximum number of results to return (default: 3, max: 5).
     
     Returns:
         A dictionary containing the search results.
     """
+    max_results = min(max_results, 5)
+    
     with DDGS() as ddgs:
         results = [r for r in ddgs.text(query, max_results=max_results)]
     
-    return {"results": results, "original_query": query}
+    limited_results = []
+    for result in results:
+        limited_result = {
+            "title": result.get("title", "")[:200], 
+            "body": result.get("body", "")[:500],   
+            "link": result.get("link", "")[:100],   
+        }
+        limited_results.append(limited_result)
+    
+    return {"results": limited_results, "original_query": query}
 
 if __name__ == "__main__":
     mcp.run(transport="sse")
-    logger.info(f"Starting Web Search MCP server on {HOST}:{PORT}") 
+    logger.info(f"Starting Web Search MCP server on {HOST}:{PORT}")
